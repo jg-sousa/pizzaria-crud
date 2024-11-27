@@ -1,75 +1,67 @@
-import React, { useState } from 'react';
-import { db } from '../firebase';
-import { collection, addDoc } from 'firebase/firestore';
-import './AdicionarCliente.css';  // Estilo para AdicionarCliente
+import React, { useState } from "react";
+import { db } from "../firebase"; // Importa a configuração do Firestore
+import { collection, addDoc } from "firebase/firestore";
 
 const AdicionarCliente = () => {
-  const [dadosCliente, setDadosCliente] = useState({
-    nome: '',
-    endereco: '',
-    cidade: '',
-    telefone: '',
+  const [cliente, setCliente] = useState({
+    nome: "",
+    endereco: "",
+    cidade: "",
+    telefone: "",
   });
 
   const handleChange = (e) => {
-    setDadosCliente({ ...dadosCliente, [e.target.name]: e.target.value });
+    setCliente({ ...cliente, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, 'clientes'), dadosCliente); // Coleção 'clientes' no Firestore
-      alert('Cliente adicionado com sucesso!');
-      setDadosCliente({
-        nome: '',
-        endereco: '',
-        cidade: '',
-        telefone: '',
-      });
+      await addDoc(collection(db, "clientes"), cliente);
+      alert("Cliente adicionado com sucesso!");
+      setCliente({ nome: "", endereco: "", cidade: "", telefone: "" }); // Reseta os campos
     } catch (error) {
-      console.error('Erro ao adicionar cliente: ', error);
+      console.error("Erro ao adicionar cliente: ", error);
+      alert("Erro ao adicionar cliente.");
     }
   };
 
   return (
-    <div className="adicionar-cliente-form">
-      <h2>Adicionar Cliente</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="nome"
-          value={dadosCliente.nome}
-          onChange={handleChange}
-          placeholder="Nome do Cliente"
-          required
-        />
-        <input
-          type="text"
-          name="endereco"
-          value={dadosCliente.endereco}
-          onChange={handleChange}
-          placeholder="Endereço"
-          required
-        />
-        <input
-          type="text"
-          name="cidade"
-          value={dadosCliente.cidade}
-          onChange={handleChange}
-          placeholder="Cidade"
-          required
-        />
-        <input
-          type="text"
-          name="telefone"
-          value={dadosCliente.telefone}
-          onChange={handleChange}
-          placeholder="Telefone"
-          required
-        />
-        <button type="submit" className="btn">Adicionar Cliente</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="nome"
+        value={cliente.nome}
+        onChange={handleChange}
+        placeholder="Nome"
+        required
+      />
+      <input
+        type="text"
+        name="endereco"
+        value={cliente.endereco}
+        onChange={handleChange}
+        placeholder="Endereço"
+        required
+      />
+      <input
+        type="text"
+        name="cidade"
+        value={cliente.cidade}
+        onChange={handleChange}
+        placeholder="Cidade"
+        required
+      />
+      <input
+        type="text"
+        name="telefone"
+        value={cliente.telefone}
+        onChange={handleChange}
+        placeholder="Telefone"
+        required
+      />
+      <button type="submit">Adicionar Cliente</button>
+    </form>
   );
 };
 
