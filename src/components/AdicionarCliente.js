@@ -1,28 +1,32 @@
 import React, { useState } from "react";
-import { db } from "../firebase"; // Importa a configuração do Firestore
+import { db } from "../firebase";  // Verifique o caminho correto do arquivo firebase.js
 import { collection, addDoc } from "firebase/firestore";
 
-const AdicionarCliente = () => {
-  const [cliente, setCliente] = useState({
+const AddClient = () => {
+  const [clientData, setClientData] = useState({
     nome: "",
-    endereco: "",
+    rua: "",
+    bairro: "",
+    numero: "",
     cidade: "",
+    estado: "",
     telefone: "",
+    cpf: "",
+    sexo: "Masculino", // Defina um valor padrão
   });
 
   const handleChange = (e) => {
-    setCliente({ ...cliente, [e.target.name]: e.target.value });
+    setClientData({ ...clientData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, "clientes"), cliente);
-      alert("Cliente adicionado com sucesso!");
-      setCliente({ nome: "", endereco: "", cidade: "", telefone: "" }); // Reseta os campos
+      // Adiciona os dados do cliente ao Firestore
+      const docRef = await addDoc(collection(db, "clientes"), clientData);
+      console.log("Cliente adicionado com ID: ", docRef.id);
     } catch (error) {
       console.error("Erro ao adicionar cliente: ", error);
-      alert("Erro ao adicionar cliente.");
     }
   };
 
@@ -31,38 +35,80 @@ const AdicionarCliente = () => {
       <input
         type="text"
         name="nome"
-        value={cliente.nome}
+        value={clientData.nome}
         onChange={handleChange}
         placeholder="Nome"
         required
       />
       <input
         type="text"
-        name="endereco"
-        value={cliente.endereco}
+        name="rua"
+        value={clientData.rua}
         onChange={handleChange}
-        placeholder="Endereço"
+        placeholder="Rua"
+        required
+      />
+      <input
+        type="text"
+        name="bairro"
+        value={clientData.bairro}
+        onChange={handleChange}
+        placeholder="Bairro"
+        required
+      />
+      <input
+        type="text"
+        name="numero"
+        value={clientData.numero}
+        onChange={handleChange}
+        placeholder="Número"
         required
       />
       <input
         type="text"
         name="cidade"
-        value={cliente.cidade}
+        value={clientData.cidade}
         onChange={handleChange}
         placeholder="Cidade"
         required
       />
       <input
         type="text"
+        name="estado"
+        value={clientData.estado}
+        onChange={handleChange}
+        placeholder="Estado"
+        required
+      />
+      <input
+        type="text"
         name="telefone"
-        value={cliente.telefone}
+        value={clientData.telefone}
         onChange={handleChange}
         placeholder="Telefone"
         required
       />
+      <input
+        type="text"
+        name="cpf"
+        value={clientData.cpf}
+        onChange={handleChange}
+        placeholder="CPF"
+        required
+      />
+      <select
+        name="sexo"
+        value={clientData.sexo}
+        onChange={handleChange}
+        required
+      >
+        <option value="Masculino">Masculino</option>
+        <option value="Feminino">Feminino</option>
+        <option value="Outro">Outro</option>
+      </select>
       <button type="submit">Adicionar Cliente</button>
     </form>
   );
 };
 
-export default AdicionarCliente;
+export default AddClient;
