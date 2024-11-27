@@ -1,7 +1,6 @@
-// src/components/FazerPedido.js
 import React, { useState, useEffect } from "react";
-import { db } from "../firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { db } from "../firebase"; // Certifique-se de que está exportando db corretamente
+import { collection, getDocs, addDoc } from "firebase/firestore"; // Adicionando a importação de getDocs
 import { useNavigate } from "react-router-dom";
 
 const FazerPedido = () => {
@@ -43,15 +42,15 @@ const FazerPedido = () => {
     try {
       const docRef = await addDoc(collection(db, "pedidos"), dadosPedido);
       console.log("Pedido criado com ID: ", docRef.id);
-      navigate("/pedidos");  // Redireciona para a página de pedidos
+      navigate("/pedidos");
     } catch (error) {
       console.error("Erro ao criar pedido: ", error);
     }
   };
 
   return (
-    <div>
-      <h1>Fazer Pedido</h1>
+    <div className="form-container">
+      <h2>Fazer Pedido</h2>
       <form onSubmit={handleEnviarPedido}>
         <input
           type="text"
@@ -60,7 +59,7 @@ const FazerPedido = () => {
           onChange={(e) => setDadosPedido({ ...dadosPedido, nomeCliente: e.target.value })}
           required
         />
-        <h2>Produtos</h2>
+        <h3>Produtos</h3>
         <ul>
           {listaProdutos.map((produto) => (
             <li key={produto.id}>
@@ -71,7 +70,9 @@ const FazerPedido = () => {
           ))}
         </ul>
         <h3>Total: R$ {dadosPedido.total}</h3>
-        <button type="submit">Finalizar Pedido</button>
+        <button type="submit" className="save">
+          Finalizar Pedido
+        </button>
       </form>
     </div>
   );

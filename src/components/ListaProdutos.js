@@ -8,11 +8,11 @@ const ListaProdutos = () => {
   useEffect(() => {
     const fetchProdutos = async () => {
       const querySnapshot = await getDocs(collection(db, "produtos"));
-      const produtosList = querySnapshot.docs.map((doc) => ({
+      const produtos = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      setProdutos(produtosList);
+      setProdutos(produtos);
     };
 
     fetchProdutos();
@@ -23,9 +23,7 @@ const ListaProdutos = () => {
       <h1>Lista de Produtos</h1>
       <ul>
         {produtos.map((produto) => (
-          <li key={produto.id}>
-            {produto.nome} - R$ {produto.preco}
-          </li>
+          <li key={produto.id}>{produto.nome} - R$ {produto.preco}</li>
         ))}
       </ul>
     </div>
