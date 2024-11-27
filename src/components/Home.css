@@ -1,38 +1,27 @@
-/* Home.css */
-.home {
-    text-align: center;
-    margin-top: 50px;
-  }
-  
-  .home h1 {
-    font-size: 48px;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .home p {
-    font-size: 20px;
-    color: #666;
-    margin-bottom: 40px;
-  }
-  
-  .home-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .home-buttons button {
-    font-size: 18px;
-    padding: 15px 30px;
-    border-radius: 10px;
-    background-color: #0066cc;
-    border: none;
-    color: white;
-    transition: background-color 0.3s ease;
-  }
-  
-  .home-buttons button:hover {
-    background-color: #005bb5;
-  }
-  
+/* src/components/Home.css */
+.home-container {
+  background-color: #ffffff;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.home-title {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #ff6f61;
+  margin-bottom: 20px;
+}
+
+.home-description {
+  font-size: 1.5rem;
+  color: #bbb;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}

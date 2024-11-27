@@ -1,30 +1,30 @@
-/* Navbar.css */
-.navbar {
-    background-color: #0066cc;
-    padding: 15px 30px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .navbar-logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-  }
-  
-  .navbar-links a {
-    color: white;
-    margin-left: 20px;
-    text-decoration: none;
-    font-size: 18px;
-  }
-  
-  .navbar-links a:hover {
-    color: #ffe600;
-  }
-  
+/* src/components/Nav.css */
+.nav {
+  background-color: transparent; /* Fundo transparente */
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-link {
+  color: #ff6f61;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 8px 16px; /* Adiciona um pouco de espaçamento ao redor do texto */
+  transition: all 0.3s ease-in-out;
+  background: transparent; /* Remove o fundo dos links */
+  border: none; /* Remove a borda dos links */
+}
+
+.nav-link:hover {
+  color: #fff;
+  transform: scale(1.1);
+  background-color: transparent; /* Garante que o fundo continue transparente */
+}

@@ -1,180 +1,36 @@
-/* Reset de estilo e configurações globais */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* src/App.css */
 body {
+  margin: 0;
   font-family: 'Arial', sans-serif;
-  background-color: #121212;  /* Cor de fundo escura */
-  color: #e0e0e0;             /* Cor do texto clara */
-  transition: all 0.3s ease;
-  padding: 20px;
-}
-
-h1, h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-h1 {
-  font-size: 2rem;
-  color: #fff;
-}
-
-h2 {
-  font-size: 1.5rem;
-  color: #bbb;
-}
-
-/* Estilo de listas e itens */
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  background-color: #1f1f1f; /* Cor de fundo do item */
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  transition: transform 0.3s, background-color 0.3s;
-}
-
-li:hover {
-  background-color: #333; /* Cor de fundo mais clara ao passar o mouse */
-  transform: scale(1.05);
-}
-
-button {
-  cursor: pointer;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  transition: background-color 0.3s;
-  margin: 5px;
-}
-
-button:hover {
-  opacity: 0.8;
-}
-
-button:focus {
-  outline: none;
-}
-
-/* Estilo dos botões de ação */
-button.edit, button.save, button.cancel, button.delete {
-  background-color: #4CAF50;  /* Verde */
+  background-color: #121212;
   color: white;
 }
 
-button.delete {
-  background-color: #F44336; /* Vermelho */
-}
-
-button.save {
-  background-color: #2196F3; /* Azul */
-}
-
-button.cancel {
-  background-color: #FF9800; /* Laranja */
-}
-
-/* Estilo de input */
-input[type="text"] {
-  padding: 10px;
-  border: 1px solid #333;
-  border-radius: 5px;
-  width: 100%;
-  background-color: #333;
-  color: #fff;
-  font-size: 16px;
-}
-
-input[type="text"]:focus {
-  border-color: #4CAF50; /* Verde para o foco */
-}
-
-/* Formulários e containers */
-form {
-  max-width: 600px;
-  margin: 0 auto;
-  background-color: #1f1f1f;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-form input {
-  margin-bottom: 15px;
-}
-
-form button {
-  width: 100%;
-  padding: 12px;
-  font-size: 18px;
-  border-radius: 5px;
-}
-
-/* Container principal */
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-/* Títulos dentro do formulário */
-form h2 {
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  margin-bottom: 20px;
+  padding: 0;
+  min-height: 100vh;
+  justify-content: flex-start;
 }
 
-/* Estilo das listas de pedidos */
-.pedido-lista ul {
-  padding-left: 0;
-}
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .nav-link {
+    font-size: 1.1rem;
+  }
 
-.pedido-lista li {
-  background-color: #222;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 15px;
-  color: #ddd;
-}
+  .home-title {
+    font-size: 2.5rem;
+  }
 
-.pedido-lista li p {
-  margin: 5px 0;
+  .home-description {
+    font-size: 1.2rem;
+  }
 }
-
-.pedido-lista li button {
-  margin-top: 5px;
-  padding: 10px;
-  width: 48%;
-}
-
-/* Ajuste de margens e paddings */
-.container {
-  padding: 20px;
-  margin-top: 40px;
-}
-
-/* Estilos do formulário de pedido */
-.form-container {
-  margin-top: 30px;
-  padding: 20px;
-  background-color: #1f1f1f;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-}
-
-.form-container h2 {
-  color: #fff;
-}
-
-/* Estilo do botão de "Finalizar Pedido" */
-button.save {
-  background-color: #2196F3;  /* Azul */
-}
-
