@@ -1,19 +1,23 @@
-import React from "react";
-import Clientes from "./components/Clientes";
-import Produtos from "./components/Produtos";
-import Pedidos from "./components/Pedidos";
-import Listagem from "./components/Listagem";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import AdicionarCliente from './components/AdicionarCliente';
+import AdicionarProduto from './components/AdicionarProduto';
+import ListaClientes from './components/ListaClientes';
 
-const App = () => {
+function App() {
   return (
-    <div>
-      <h1>CRUD Pizzaria</h1>
-      <Clientes />
-      <Produtos />
-      <Pedidos />
-      <Listagem />
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/adicionar-cliente" element={<AdicionarCliente />} />
+        <Route path="/adicionar-produto" element={<AdicionarProduto />} />
+        <Route path="/lista-clientes" element={<ListaClientes />} />
+      </Routes>
+    </Router>
   );
-};
+}
 
 export default App;
