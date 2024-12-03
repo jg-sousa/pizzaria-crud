@@ -1,96 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import { db } from '../firebase';
-import { collection, getDocs, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import React, { useState, useEffect } from "react";
+import { db } from "../firebase";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { Link } from "react-router-dom";
 
 const ListaProdutos = () => {
   const [produtos, setProdutos] = useState([]);
-  const [produtoEditando, setProdutoEditando] = useState(null);
-  const [novoNome, setNovoNome] = useState('');
-  const [novoPreco, setNovoPreco] = useState('');
 
   useEffect(() => {
     const fetchProdutos = async () => {
-      const querySnapshot = await getDocs(collection(db, 'produtos'));
-      const produtosList = querySnapshot.docs.map(doc => ({
+      const querySnapshot = await getDocs(collection(db, "produtos"));
+      const produtosLista = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      setProdutos(produtosList);
+      setProdutos(produtosLista);
     };
-
     fetchProdutos();
   }, []);
 
-  const handleExcluirProduto = async (id) => {
+  const handleExcluir = async (id) => {
     try {
-      await deleteDoc(doc(db, 'produtos', id));
-      setProdutos(produtos.filter(produto => produto.id !== id));
-      console.log('Produto excluído com sucesso!');
+      await deleteDoc(doc(db, "produtos", id));
+      setProdutos((prevProdutos) => prevProdutos.filter((produto) => produto.id !== id));
+      alert("Produto excluído com sucesso!");
     } catch (error) {
-      console.error('Erro ao excluir produto:', error);
-    }
-  };
-
-  const handleEditarProduto = async (id) => {
-    try {
-      const produtoRef = doc(db, 'produtos', id);
-      await updateDoc(produtoRef, {
-        nome: novoNome,
-        preco: parseFloat(novoPreco),
-      });
-      setProdutos(
-        produtos.map(produto =>
-          produto.id === id
-            ? { ...produto, nome: novoNome, preco: parseFloat(novoPreco) }
-            : produto
-        )
-      );
-      setProdutoEditando(null);
-      console.log('Produto editado com sucesso!');
-    } catch (error) {
-      console.error('Erro ao editar produto:', error);
+      console.error("Erro ao excluir o produto:", error);
     }
   };
 
   return (
-    <div className="product-list">
-      <h2>Lista de Produtos</h2>
-      {produtoEditando ? (
-        <div>
-          <input
-            type="text"
-            value={novoNome}
-            onChange={(e) => setNovoNome(e.target.value)}
-            placeholder="Novo Nome"
-          />
-          <input
-            type="number"
-            value={novoPreco}
-            onChange={(e) => setNovoPreco(e.target.value)}
-            placeholder="Novo Preço"
-          />
-          <button onClick={() => handleEditarProduto(produtoEditando)}>Salvar Edição</button>
-          <button onClick={() => setProdutoEditando(null)}>Cancelar</button>
-        </div>
-      ) : (
-        <ul>
+    <div>
+      <h1>Lista de Produtos</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Categoria</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
           {produtos.map((produto) => (
-            <li key={produto.id}>
-              <span>{produto.nome} - R$ {produto.preco}</span>
-              <button onClick={() => {
-                setProdutoEditando(produto.id);
-                setNovoNome(produto.nome);
-                setNovoPreco(produto.preco);
-              }}>
-                Editar
-              </button>
-              <button onClick={() => handleExcluirProduto(produto.id)}>
-                Excluir
-              </button>
-            </li>
+            <tr key={produto.id}>
+              <td>{produto.nome}</td>
+              <td>R$ {produto.preco.toFixed(2)}</td>
+              <td>{produto.categoria}</td>
+              <td>
+                <button>
+                  <Link to={`/produtos/editar/${produto.id}`}>Editar</Link>
+                </button>
+                <button onClick={() => handleExcluir(produto.id)}>Excluir</button>
+              </td>
+            </tr>
           ))}
-        </ul>
-      )}
+        </tbody>
+      </table>
     </div>
   );
 };

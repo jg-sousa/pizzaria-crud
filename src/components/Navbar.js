@@ -1,20 +1,38 @@
-// src/components/Nav.js
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Navbar.css';
+import React, { useState } from "react";
+import { Drawer, List, ListItem, ListItemText, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
-const Nav = () => {
+const Navbar = () => {
+  const [open, setOpen] = useState(false);
+
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
+      return;
+    }
+    setOpen(open);
+  };
+
   return (
-    <nav className="nav">
-      <ul className="nav-links">
-        <li><Link to="/" className="nav-link">Home</Link></li>
-        <li><Link to="/clientes" className="nav-link">Clientes</Link></li>
-        <li><Link to="/produtos" className="nav-link">Produtos</Link></li>
-        <li><Link to="/pedidos" className="nav-link">Pedidos</Link></li>
-        <li><Link to="/fazer-pedido" className="nav-link">Fazer Pedido</Link></li>
-      </ul>
-    </nav>
+    <div>
+      <Button onClick={toggleDrawer(true)} variant="contained">Menu</Button>
+      <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
+        <List>
+          <ListItem button component={Link} to="/" onClick={toggleDrawer(false)}>
+            <ListItemText primary="Home" />
+          </ListItem>
+          <ListItem button component={Link} to="/clientes" onClick={toggleDrawer(false)}>
+            <ListItemText primary="Clientes" />
+          </ListItem>
+          <ListItem button component={Link} to="/produtos" onClick={toggleDrawer(false)}>
+            <ListItemText primary="Produtos" />
+          </ListItem>
+          <ListItem button component={Link} to="/pedidos" onClick={toggleDrawer(false)}>
+            <ListItemText primary="Pedidos" />
+          </ListItem>
+        </List>
+      </Drawer>
+    </div>
   );
-}
+};
 
-export default Nav;
+export default Navbar;
