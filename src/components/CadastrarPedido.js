@@ -153,7 +153,7 @@ const CadastrarPedido = () => {
   return (
     <Container maxWidth="lg">
       <h1>Gerenciamento de Pedidos</h1>
-      <Button variant="contained" color="primary" onClick={() => setOpenEditDialog(true)}>
+      <Button variant="contained" color="sucess" onClick={() => setOpenEditDialog(true)}>
         Cadastrar Novo Pedido
       </Button>
       <TableContainer component={Paper} sx={{ marginTop: 3 }}>
@@ -178,7 +178,7 @@ const CadastrarPedido = () => {
                 <TableCell>{new Date(pedido.data.seconds * 1000).toLocaleDateString()}</TableCell>
                 <TableCell>
                   <Button onClick={() => handleEdit(pedido)} color="primary">Editar</Button>
-                  <Button onClick={() => { setSelectedPedidoId(pedido.id); setOpenDeleteDialog(true); }} color="secondary">Cancelar</Button>
+                  <Button onClick={() => { setSelectedPedidoId(pedido.id); setOpenDeleteDialog(true); }} color="error">Cancelar</Button>
                   <Button onClick={() => handleMarkAsDelivered(pedido.id)} color="success">Entregue</Button>
                 </TableCell>
               </TableRow>
@@ -264,7 +264,7 @@ const CadastrarPedido = () => {
           <Button onClick={() => setOpenDeleteDialog(false)} color="primary">
             Cancelar
           </Button>
-          <Button onClick={() => handleDelete(selectedPedidoId)} color="secondary">
+          <Button onClick={() => handleDelete(selectedPedidoId)} color="error">
             Cancelar Pedido
           </Button>
         </DialogActions>

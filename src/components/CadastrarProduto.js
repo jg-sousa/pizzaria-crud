@@ -95,7 +95,7 @@ const CadastrarProduto = () => {
   return (
     <Container maxWidth="lg">
       <h1>Gerenciamento de Produtos</h1>
-      <Button variant="contained" color="primary" onClick={() => setOpenEditDialog(true)}>
+      <Button variant="contained" color="sucess" onClick={() => setOpenEditDialog(true)}>
         Cadastrar Novo Produto
       </Button>
 
@@ -124,7 +124,7 @@ const CadastrarProduto = () => {
                 <TableCell>{produto.categoria}</TableCell>
                 <TableCell>
                   <Button onClick={() => handleEdit(produto)} color="primary">Editar</Button>
-                  <Button onClick={() => { setSelectedProdutoId(produto.id); setOpenDeleteDialog(true); }} color="secondary">Excluir</Button>
+                  <Button onClick={() => { setSelectedProdutoId(produto.id); setOpenDeleteDialog(true); }} color="eror">Excluir</Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -203,7 +203,7 @@ const CadastrarProduto = () => {
           <Button onClick={() => setOpenDeleteDialog(false)} color="primary">
             Cancelar
           </Button>
-          <Button onClick={() => handleDelete(selectedProdutoId)} color="secondary">
+          <Button onClick={() => handleDelete(selectedProdutoId)} color="error">
             Excluir
           </Button>
         </DialogActions>
