@@ -95,7 +95,7 @@ const CadastrarProduto = () => {
   return (
     <Container maxWidth="lg">
       <h1>Gerenciamento de Produtos</h1>
-      <Button variant="contained" color="sucess" onClick={() => setOpenEditDialog(true)}>
+      <Button variant="contained" color="secondary" onClick={() => setOpenEditDialog(true)}>
         Cadastrar Novo Produto
       </Button>
 
