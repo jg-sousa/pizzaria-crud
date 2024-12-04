@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../firebase"; // Certifique-se de ter configurado o Firebase
+import { db } from "../firebase";
 import { collection, addDoc, doc, updateDoc, getDoc } from "firebase/firestore";
 import { useNavigate, useParams } from "react-router-dom";
+import { TextField, Button, MenuItem, Select, InputLabel, FormControl, Box, Typography, Container, Snackbar, Alert } from "@mui/material";
 
 const CadastrarProduto = () => {
   const [nome, setNome] = useState("");
   const [preco, setPreco] = useState("");
   const [categoria, setCategoria] = useState("Pizza");
   const [isEdit, setIsEdit] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const navigate = useNavigate();
-  const { id } = useParams(); // Pega o ID do produto da URL
+  const { id } = useParams();
 
-  // Função para adicionar um novo produto
   const handleAdicionarProduto = async (e) => {
     e.preventDefault();
 
@@ -22,22 +25,28 @@ const CadastrarProduto = () => {
           preco: parseFloat(preco),
           categoria,
         });
+        setSnackbarMessage("Produto atualizado com sucesso!");
+        setSnackbarSeverity("success");
       } else {
         await addDoc(collection(db, "produtos"), {
           nome,
           preco: parseFloat(preco),
           categoria,
         });
+        setSnackbarMessage("Produto adicionado com sucesso!");
+        setSnackbarSeverity("success");
       }
 
-      alert(isEdit ? "Produto editado com sucesso!" : "Produto adicionado com sucesso!");
+      setOpenSnackbar(true);
       navigate("/produtos");
     } catch (error) {
       console.error("Erro ao adicionar produto:", error);
+      setSnackbarMessage("Erro ao adicionar produto!");
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true);
     }
   };
 
-  // Carregar os dados do produto para edição, caso o ID seja passado pela URL
   useEffect(() => {
     if (id) {
       const fetchProduto = async () => {
@@ -59,43 +68,67 @@ const CadastrarProduto = () => {
   }, [id]);
 
   return (
-    <div>
-      <h1>{isEdit ? "Editar Produto" : "Cadastrar Produto"}</h1>
+    <Container maxWidth="sm">
+      <Typography>
+        <h1>Cadastrar Produto</h1>
+      </Typography>
       <form onSubmit={handleAdicionarProduto}>
-        <div>
-          <label>Nome:</label>
-          <input
-            type="text"
+        <Box mb={2}>
+          <TextField
+            label="Nome do Produto"
+            variant="outlined"
+            fullWidth
             value={nome}
             onChange={(e) => setNome(e.target.value)}
             required
           />
-        </div>
-        <div>
-          <label>Preço:</label>
-          <input
+        </Box>
+        <Box mb={2}>
+          <TextField
+            label="Preço"
+            variant="outlined"
             type="number"
+            fullWidth
             value={preco}
             onChange={(e) => setPreco(e.target.value)}
             required
             step="0.01"
+            inputProps={{ min: 0 }}
           />
-        </div>
-        <div>
-          <label>Categoria:</label>
-          <select
-            value={categoria}
-            onChange={(e) => setCategoria(e.target.value)}
-            required
-          >
-            <option value="Pizza">Pizza</option>
-            <option value="Bebida">Bebida</option>
-            <option value="Sobremesa">Sobremesa</option>
-          </select>
-        </div>
-        <button type="submit">{isEdit ? "Atualizar Produto" : "Adicionar Produto"}</button>
+        </Box>
+        <Box mb={2}>
+          <FormControl fullWidth>
+            <InputLabel id="categoria-label">Categoria</InputLabel>
+            <Select
+              labelId="categoria-label"
+              value={categoria}
+              onChange={(e) => setCategoria(e.target.value)}
+              required
+            >
+              <MenuItem value="Pizza">Pizza</MenuItem>
+              <MenuItem value="Bebida">Bebida</MenuItem>
+              <MenuItem value="Sobremesa">Sobremesa</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+
+        <Box mt={3} display="flex" justifyContent="flex-start">
+          <Button type="submit" variant="contained" color="primary" size="large">
+            {isEdit ? "Atualizar Produto" : "Adicionar Produto"}
+          </Button>
+        </Box>
       </form>
-    </div>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert onClose={() => setOpenSnackbar(false)} severity={snackbarSeverity}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+    </Container>
   );
 };
 

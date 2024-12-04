@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { collection, addDoc, getDocs } from "firebase/firestore";
+import { TextField, Button, MenuItem, Select, InputLabel, FormControl, Box, Typography, Container, Snackbar, Alert, Paper, Grid, FormControlLabel, Checkbox } from "@mui/material";
 
 const CadastrarPedido = () => {
   const [clientes, setClientes] = useState([]);
@@ -8,6 +9,8 @@ const CadastrarPedido = () => {
   const [clienteSelecionado, setClienteSelecionado] = useState("");
   const [itens, setItens] = useState([]);
   const [total, setTotal] = useState(0);
+  const [openSnackbar, setOpenSnackbar] = useState(false); // Controla a visibilidade do Snackbar
+  const [snackbarMessage, setSnackbarMessage] = useState(""); // Mensagem do Snackbar
 
   // Carregar clientes e produtos ao inicializar o componente
   useEffect(() => {
@@ -36,11 +39,14 @@ const CadastrarPedido = () => {
         total,
         data: new Date(),
       });
-      alert("Pedido realizado com sucesso!");
+      setSnackbarMessage("Pedido realizado com sucesso!"); // Mensagem de sucesso
+      setOpenSnackbar(true); // Abre o Snackbar
       setItens([]); // Limpa os itens após enviar o pedido
       setTotal(0); // Limpa o total após o pedido
     } catch (error) {
       console.error("Erro ao realizar o pedido:", error);
+      setSnackbarMessage("Erro ao realizar o pedido."); // Mensagem de erro
+      setOpenSnackbar(true); // Abre o Snackbar
     }
   };
 
@@ -116,6 +122,18 @@ const CadastrarPedido = () => {
           Realizar Pedido
         </Button>
       </form>
+
+      {/* Snackbar para notificação */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }} // Alinha no canto inferior direito
+      >
+        <Alert onClose={() => setOpenSnackbar(false)} severity="success" sx={{ width: "100%" }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
