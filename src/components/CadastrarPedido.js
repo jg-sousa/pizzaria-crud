@@ -4,7 +4,6 @@ import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from "firebase
 import { TextField, Button, MenuItem, Select, InputLabel, FormControl, Box, Typography, Container, Snackbar, Alert, Paper, Grid, FormControlLabel, Checkbox, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
 const CadastrarPedido = () => {
-  // Estados
   const [clientes, setClientes] = useState([]);
   const [produtos, setProdutos] = useState([]);
   const [pedidos, setPedidos] = useState([]);
@@ -19,7 +18,6 @@ const CadastrarPedido = () => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [selectedPedidoId, setSelectedPedidoId] = useState(null);
 
-  // Função para buscar pedidos
   const fetchPedidos = async () => {
     try {
       const pedidosSnapshot = await getDocs(collection(db, "pedidos"));
@@ -33,7 +31,6 @@ const CadastrarPedido = () => {
     }
   };
 
-  // Carregar dados ao inicializar o componente
   useEffect(() => {
     const fetchClientes = async () => {
       const clientesSnapshot = await getDocs(collection(db, "clientes"));
@@ -55,7 +52,7 @@ const CadastrarPedido = () => {
 
     fetchClientes();
     fetchProdutos();
-    fetchPedidos(); // Chamada da função global
+    fetchPedidos();
   }, []);
 
   const handleSubmit = async (e) => {

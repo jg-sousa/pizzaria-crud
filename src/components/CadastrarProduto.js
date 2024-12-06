@@ -35,7 +35,7 @@ const CadastrarProduto = () => {
 
     try {
       if (isEdit) {
-        const produtoDoc = doc(db, "produtos", editingProduto.id);  // Corrigido para usar o ID correto
+        const produtoDoc = doc(db, "produtos", editingProduto.id);
         await updateDoc(produtoDoc, produtoData);
         setSnackbarMessage("Produto atualizado com sucesso!");
       } else {
@@ -191,7 +191,6 @@ const CadastrarProduto = () => {
         </DialogActions>
       </Dialog>
 
-      {/* Diálogo de Confirmação de Exclusão */}
       <Dialog open={openDeleteDialog} onClose={() => setOpenDeleteDialog(false)}>
         <DialogTitle>Confirmar Exclusão</DialogTitle>
         <DialogContent>
